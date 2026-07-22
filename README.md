@@ -41,7 +41,7 @@ A lightweight, self-hosted domain parking and lead generation platform built wit
    Edit `_config/config.prod.php` and set:
    - `admin_domain` — the domain where admin access lives (e.g. `servicedomain.com`)
    - `admin_path` — URI path for admin (default `/admin`)
-   - Remove the hardcoded `admin` username/password (you'll create your account on first run)
+   - Remove any hardcoded `admin` username/password (you'll create your account on first run)
 
 3. **Point your web root** to the `htmldocs/` directory
 
@@ -58,17 +58,27 @@ A lightweight, self-hosted domain parking and lead generation platform built wit
 
 ## Configuration
 
-Config lives in `_config/config.php` (gitignored). The available keys:
+Development config lives in `_config/config.php` (gitignored). 
+Production config lives in `_config/config.prod.php`
+
+- DO NOT include config.php when publishing to production. It is intended for local testing and development.
+- DO NOT use config.prod.php in development environmet, it will override config.php
+- Ensure config.prod.php exists in production environment.
+- Only use [admin][username] and [admin][password] in the event of a lockout. It will provide access to user management only.
+
+The available keys:
 
 ```php
 return [
     'site' => [
-        'domain'        => $host,       // auto-detected
+        'domain'        => $host,               // auto-detected
         'admin_domain'  => 'servicedomain.com', // admin lives here
         'admin_path'    => '/admin',
     ],
     'admin' => [
-        'title' => 'ParkPod',
+        'title'     => 'ParkPod',
+        'username'  => 'admin',                 // login override user - DO NOT USE UNLESS LOCKED OUT
+        'password'  => 'admin',                 // login override password - DO NOT USE UNLESS LOCKED OUT
     ],
     'database' => [
         'path' => '/db/db.sqlite',
@@ -76,7 +86,7 @@ return [
 ];
 ```
 
-Additional settings are stored in the database and configurable from Admin > Settings:
+All other settings are stored in the database and configurable from Admin > Settings:
 
 | Setting | Description |
 |---------|-------------|
