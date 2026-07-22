@@ -1,0 +1,565 @@
+/* ---------------------------------------------------------
+   ADMIN SITE (domain.com/admin)
+--------------------------------------------------------- */
+
+html, body {
+    height: 100%;
+}
+
+body.admin-body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1f1f1f 0%, #2a2a2a 100%);
+    color: #f2f2f2;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+body.admin-body a {
+    /* color: #6fb3ff; */
+}
+
+body.admin-body a:visited {
+    /* color: #b39ddb; */
+}
+
+body.admin-body a:hover {
+    color: #90caf9;
+}
+
+body.admin-body a:active {
+    color: #ffcc00;
+}
+
+a[target="_blank"]::after {
+    content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABwSURBVChTY2TAATo6Ov5DmWDAiC5QUVEB17xx48Yb169fVwexWUAEsiQMwBRpamreBNFMUHEUgKzI399fAySGoRCbIpCNKAp37959Al0RHKB7BqQYygQDmDyG1a6urhZQJgrA6hlsABw86NZjAgYGAFHvPH/6f0ntAAAAAElFTkSuQmCC);
+    margin: 0 3px 0 5px;
+}
+
+
+.admin-wrapper {
+    flex: 1;
+    width: min(1200px, 100%);
+    margin: 0 auto;
+    padding: 24px 20px 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-tabs {
+    list-style: none;
+    margin: 0 0 24px 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    border-bottom: 1px solid #444;
+    /* padding-bottom: 12px; */
+}
+
+.admin-tabs li {
+    margin: 0;
+}
+
+.admin-tabs a {
+    display: inline-block;
+    padding: 10px 16px;
+    color: #ddd;
+    text-decoration: none;
+    background: #2d2d2d;
+    border: 1px solid #444;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.admin-tabs a:hover,
+.admin-tabs a:focus,
+.admin-tabs a.active {
+    background: #515151;
+    color: #fff;
+}
+
+/* Login */
+.login-wrapper,
+.first-run-wrapper {
+    max-width: 420px;
+    width: 100%;
+    margin: 80px auto;
+    background: rgba(51, 51, 51, 0.95);
+    padding: 32px;
+    border-radius: 14px;
+    border: 1px solid #444;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+}
+
+.login-wrapper h1,
+.first-run-wrapper h1 {
+    margin-top: 0;
+    text-align: center;
+    color: #ffcc00;
+}
+
+.login-wrapper input,
+.first-run-wrapper input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #555;
+    background: #242424;
+    color: #fff;
+    box-sizing: border-box;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 13px;
+}
+
+.login-wrapper button,
+.first-run-wrapper button,
+.admin-box button {
+    width: 100%;
+    padding: 12px 14px;
+    background: #ffcc00;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #111;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.admin-table button {
+    width: auto;
+    padding: 12px 14px;
+    background: #ffcc00;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #111;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.login-wrapper button:hover,
+.admin-box button:hover {
+    background: #ffd84d;
+    transform: translateY(-1px);
+}
+
+/* Header bar */
+.admin-header {
+    background: #171717;
+    padding: 0 20px;
+    border-bottom: 2px solid #ffcc00;
+}
+
+.admin-header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+}
+
+.admin-header-title {
+    color: #ffcc00;
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.admin-header-title:hover {
+    text-decoration: underline;
+}
+
+.logout-link {
+    color: #eee;
+    text-decoration: none;
+    padding: 8px 14px;
+    background: #444;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.logout-link:hover {
+    background: #c0392b;
+    color: #fff;
+}
+
+/* Dashboard / content panels */
+.admin-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+    margin-top: 8px;
+}
+
+.admin-box {
+    flex: 1 1 320px;
+    background: rgba(51, 51, 51, 0.95);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #444;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+    color: #c5c5c5;
+}   
+
+.admin-box a {
+    color: #c5c5c5;
+}
+
+.admin-box-full {
+    flex: 1 1 100%;
+}
+
+.admin-box h2 {
+    margin-top: 0;
+    margin-bottom: 14px;
+    color: #ffcc00;
+    font-size: 20px;
+}
+
+.admin-box p {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+.admin-box form {
+    display: flex;    
+    gap: 10px;
+}
+
+.admin-box form.panel {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.admin-box form.panel button {
+    width: auto;
+    padding: 8px 16px;
+}
+
+.admin-box form.group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.admin-box form .group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: auto;    
+}
+
+.admin-box form.panel.filter-bar > * {
+    flex: 1 1 0;
+    min-width: 120px;
+}
+
+.admin-box form.panel.filter-bar > button,
+.admin-box form.panel.filter-bar > a {
+    flex: 0 0 auto;
+    width: auto;
+}
+
+.admin-box input,
+.admin-box select,
+.admin-box textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #555;
+    background: #242424;
+    color: #fff;
+    box-sizing: border-box;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 13px;
+}
+
+.admin-box textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #444;
+    text-align: left;
+    vertical-align: top;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 13px;
+}
+
+.admin-table th {
+    color: #ffcc00;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.admin-table th[data-sort-col] {
+    cursor: pointer;
+    user-select: none;
+}
+
+.admin-table th[data-sort-col]:hover {
+    text-decoration: underline;
+}
+
+.sort-arrow {
+    font-size: 11px;
+    margin-left: 4px;
+}
+
+.admin-table td a {
+    color: #ffcc00;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.admin-table td a:hover {
+    text-decoration: underline;
+}
+
+.admin-box .muted {
+    color: #aaa;
+}
+
+.admin-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+    align-items: flex-end;
+}
+
+.admin-filter .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1 1 180px;
+}
+
+.admin-filter .filter-group label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #aaa;
+}
+
+.admin-filter .filter-group input,
+.admin-filter .filter-group select {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #242424;
+    color: #fff;
+    box-sizing: border-box;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 13px;
+}
+
+.admin-filter .filter-actions {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+.admin-filter .filter-actions button {
+    width: auto;
+    padding: 8px 16px;
+}
+
+.admin-filter .filter-actions a {
+    color: #aaa;
+    text-decoration: none;
+    padding: 8px 12px;
+}
+
+.admin-filter .filter-actions a:hover {
+    color: #fff;
+}
+
+.admin-form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.admin-form-row .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1 1 200px;
+}
+
+.admin-form-row .form-group label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #aaa;
+}
+
+.admin-form-row .form-group input {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #242424;
+    color: #fff;
+    box-sizing: border-box;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 13px;
+}
+
+.admin-form-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.admin-form-actions button {
+    width: auto;
+    padding: 8px 16px;
+}
+
+.admin-inline-edit input {
+    width: 100%;
+    padding: 4px 6px;
+    border-radius: 4px;
+    border: 1px solid #ffcc00;
+    background: #1a1a1a;
+    color: #fff;
+    box-sizing: border-box;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 13px;
+}
+
+.admin-log {
+    max-height: 320px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 6px;
+}
+
+.admin-log-entry {
+    background: #242424;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 13px;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.admin-log-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
+    color: #ffcc00;
+}
+
+.admin-log-details {
+    margin-top: 4px;
+    color: #aaa;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 24px 20px 32px;
+    background: #232323;
+    border-top: 1px solid #444;
+    margin-top: auto;
+}
+
+.footer p {
+    margin: 6px 0;
+    color: #bbb;
+}
+
+/* Cache Modal */
+.cache-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.cache-modal-content {
+    background: #2a2a2a;
+    border: 1px solid #555;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.cache-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    border-bottom: 1px solid #444;
+}
+
+.cache-modal-title {
+    color: #ffcc00;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.cache-modal-close {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+.cache-modal-close:hover {
+    color: #fff;
+}
+
+.cache-modal-body {
+    padding: 18px;
+    overflow: auto;
+    margin: 0;
+    color: #e0e0e0;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}

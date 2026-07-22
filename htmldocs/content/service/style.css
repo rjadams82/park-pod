@@ -1,0 +1,310 @@
+/* ---------------------------------------------------------
+   SERVICE PROVIDER SITE 
+--------------------------------------------------------- */
+
+body.sp-body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f7f7f7;
+    color: #333;
+}
+
+/* Hero */
+.hero {
+    background: linear-gradient(135deg, #1a1a1a, #333);
+    color: #fff;
+    padding: 120px 20px;
+    text-align: center;
+}
+
+.hero-inner h1 {
+    font-size: 60px;
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+.hero-inner p {
+    font-size: 22px;
+    margin: 20px 0 40px;
+}
+
+.cta-btn {
+    background: #ffcc00;
+    color: #000;
+    padding: 14px 28px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* Wide Section */
+.wide-section {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.intro {
+    font-size: 18px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* Feature Grid */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+}
+
+.feature {
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.feature h3 {
+    margin-top: 0;
+    font-size: 22px;
+}
+
+/* Logo */
+.service-logo {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #ffcc00;
+    margin-bottom: 10px;
+}
+
+/* Portfolio */
+.portfolio {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+.portfolio-item {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.portfolio-item h4 {
+    margin: 0 0 10px;
+}
+
+/* Pricing */
+.pricing {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pricing-table th,
+.pricing-table td {
+    border: 1px solid #ddd;
+    padding: 14px;
+    text-align: left;
+}
+
+.pricing-table th {
+    background: #333;
+    color: #fff;
+}
+
+.pricing-table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 40px;
+    background: #eee;
+    margin-top: 60px;
+}
+
+/* ---------------------------------------------------------
+   MOBILE RESPONSIVE
+--------------------------------------------------------- */
+@media (max-width: 768px) {
+    .hero {
+        padding: 60px 16px;
+    }
+
+    .service-logo {
+        font-size: 32px;
+        letter-spacing: 2px;
+    }
+
+    .hero-inner h1 {
+        font-size: 28px;
+    }
+
+    .hero-inner p {
+        font-size: 17px;
+        margin: 16px 0 30px;
+    }
+
+    .cta-btn {
+        padding: 12px 24px;
+        font-size: 15px;
+    }
+
+    .wide-section,
+    .portfolio,
+    .pricing {
+        margin: 40px auto;
+        padding: 0 16px;
+    }
+
+    .intro {
+        font-size: 16px;
+    }
+
+    .feature-grid,
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .pricing-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .pricing-table th,
+    .pricing-table td {
+        padding: 10px 12px;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .footer {
+        padding: 24px 16px;
+        margin-top: 40px;
+    }
+}
+
+/* Contact Modal */
+.contact-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.contact-modal-content {
+    background: #fff;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 480px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+.contact-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: #222;
+    color: #fff;
+}
+
+.contact-modal-title {
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.contact-modal-close {
+    color: #aaa;
+    font-size: 24px;
+    text-decoration: none;
+    line-height: 1;
+}
+
+.contact-modal-close:hover {
+    color: #fff;
+}
+
+.contact-modal-body {
+    padding: 20px;
+}
+
+.cf-turnstile {
+    text-align: center;
+    margin: auto;
+}
+
+.contact-modal-body input,
+.contact-modal-body textarea {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.contact-modal-body textarea {
+    resize: vertical;
+}
+
+.contact-modal-body button {
+    width: 100%;
+    padding: 12px;
+    background: #222;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.contact-modal-body button:hover {
+    background: #444;
+}
+
+#contact-thankyou p {
+    color: #bd9700;
+    font-weight: 600;
+    text-align: center;
+    font-size: larger;
+    font-style: italic;
+}
+
+.footer-cta {
+    font-size: 15px;
+    padding: 10px 22px;
+}
+

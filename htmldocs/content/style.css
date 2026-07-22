@@ -1,0 +1,398 @@
+/* ---------------------------------------------------------
+   GLOBAL RESET & BASE
+--------------------------------------------------------- */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background: #fafafa;
+}
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------
+   SERVICE PROVIDER HOMEPAGE
+--------------------------------------------------------- */
+
+.sp-body {
+    background: #f7f7f7;
+    color: #333;
+}
+
+.hero {
+    background: linear-gradient(135deg, #1a1a1a, #333);
+    color: #fff;
+    padding: 120px 20px;
+    text-align: center;
+}
+
+.hero-inner h1 {
+    font-size: 60px;
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+.hero-inner p {
+    font-size: 22px;
+    margin: 20px 0 40px;
+}
+
+.cta-btn {
+    background: #ffcc00;
+    color: #000;
+    padding: 14px 28px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.wide-section {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.intro {
+    font-size: 18px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+}
+
+.feature {
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.feature h3 {
+    margin-top: 0;
+    font-size: 22px;
+}
+
+.service-logo {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #ffcc00;
+    margin-bottom: 10px;
+}
+
+/* Portfolio */
+.portfolio {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+.portfolio-item {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.portfolio-item h4 {
+    margin: 0 0 10px;
+}
+
+/* Pricing */
+.pricing {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pricing-table th,
+.pricing-table td {
+    border: 1px solid #ddd;
+    padding: 14px;
+    text-align: left;
+}
+
+.pricing-table th {
+    background: #333;
+    color: #fff;
+}
+
+.pricing-table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 40px;
+    background: #eee;
+    margin-top: 60px;
+}
+
+/* ---------------------------------------------------------
+   PARKED DOMAIN HOMEPAGE (Content-Driven)
+--------------------------------------------------------- */
+
+.parkbody {
+    background: #fafafa;
+    color: #333;
+}
+
+.park-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.park-header {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #222, #444);
+    color: #fff;
+    border-radius: 10px;
+    margin-bottom: 40px;
+}
+
+.park-header h1 {
+    font-size: 52px;
+    margin: 0 0 20px;
+}
+
+.park-header p {
+    font-size: 22px;
+    margin: 0;
+}
+
+/* Flex Sections */
+.park-sections {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.park-section {
+    flex: 1 1 calc(50% - 30px);
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    min-width: 300px;
+}
+
+.park-section h2 {
+    margin-top: 0;
+}
+
+.park-section input,
+.park-section textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.park-section button {
+    padding: 12px 22px;
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* About link */
+.park-about {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.park-about a {
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Footer */
+.park-footer {
+    text-align: center;
+    margin-top: 60px;
+    color: #666;
+}
+
+/* ---------------------------------------------------------
+   ABOUT PAGE 
+--------------------------------------------------------- */
+
+.about-section {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.about-form {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.about-form h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.about-form input,
+.about-form textarea {
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    display: block;
+}
+
+.about-form button {
+    padding: 14px 24px;
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+/* ---------------------------------------------------------
+   MOBILE RESPONSIVE
+--------------------------------------------------------- */
+@media (max-width: 768px) {
+    /* Service */
+    .hero {
+        padding: 60px 16px;
+    }
+
+    .service-logo {
+        font-size: 32px;
+        letter-spacing: 2px;
+    }
+
+    .hero-inner h1 {
+        font-size: 28px;
+    }
+
+    .hero-inner p {
+        font-size: 17px;
+        margin: 16px 0 30px;
+    }
+
+    .cta-btn {
+        padding: 12px 24px;
+        font-size: 15px;
+    }
+
+    .wide-section,
+    .portfolio,
+    .pricing {
+        margin: 40px auto;
+        padding: 0 16px;
+    }
+
+    .intro {
+        font-size: 16px;
+    }
+
+    .feature-grid,
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .pricing-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .pricing-table th,
+    .pricing-table td {
+        padding: 10px 12px;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .footer {
+        padding: 24px 16px;
+        margin-top: 40px;
+    }
+
+    /* Park */
+    .park-container {
+        padding: 20px 16px;
+    }
+
+    .park-header {
+        padding: 40px 16px;
+    }
+
+    .park-header h1 {
+        font-size: 32px;
+    }
+
+    .park-header p {
+        font-size: 18px;
+    }
+
+    .park-sections {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .park-section {
+        flex: 1 1 100%;
+        min-width: 0;
+        padding: 20px;
+    }
+
+    .about-section,
+    .about-form {
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    .about-form input,
+    .about-form textarea {
+        font-size: 16px;
+    }
+}

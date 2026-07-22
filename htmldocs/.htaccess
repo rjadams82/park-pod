@@ -1,0 +1,19 @@
+RewriteEngine On
+RewriteBase /
+
+# Allow direct access to static assets.
+RewriteCond %{REQUEST_URI} ^/content/.*$ [OR]
+RewriteCond %{REQUEST_URI} ^/includes/.*$
+RewriteRule ^ - [L]
+
+# Send the admin and about entrypoints to the PHP router.
+RewriteCond %{REQUEST_URI} ^/admin/?$ [NC]
+RewriteRule ^ index.php [L,QSA]
+
+RewriteCond %{REQUEST_URI} ^/about/?$ [NC]
+RewriteRule ^ index.php [L,QSA]
+
+# Route everything else through the PHP entrypoint unless it is a real file or directory.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L,QSA]

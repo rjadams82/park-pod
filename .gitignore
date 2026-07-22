@@ -1,0 +1,6 @@
+_config/config.php
+*.log
+db/db.sqlite
+app/app.log
+php-errors.log
+htmldocs/includes/media/service-logo.jpg

@@ -1,0 +1,168 @@
+/* ---------------------------------------------------------
+   PARKED DOMAIN SITE (all non-admin domains)
+--------------------------------------------------------- */
+
+body.parkbody {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fafafa;
+    color: #333;
+}
+
+/* Container */
+.park-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Header */
+.park-header {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #222, #444);
+    color: #fff;
+    border-radius: 10px;
+    margin-bottom: 40px;
+}
+
+.park-header h1 {
+    font-size: 52px;
+    margin: 0 0 20px;
+}
+
+.park-header p {
+    font-size: 22px;
+    margin: 0;
+}
+
+/* Flex Content Sections */
+.park-sections {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.park-section {
+    flex: 1 1 calc(50% - 30px);
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    min-width: 300px;
+}
+
+.park-section h2 {
+    margin-top: 0;
+}
+
+/* About Page */
+.about-section {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.about-section p {
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+/* Contact Form */
+.about-form {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.about-form input,
+.about-form textarea {
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.about-form button {
+    padding: 14px 24px;
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.cf-turnstile {
+    text-align: center;
+    margin: auto;
+}
+
+.dyn-item {
+    margin-bottom: 20px;
+}
+.dyn-provider {
+    font-size: 12px;
+    color: #777;
+    margin-top: 6px;
+}
+
+
+/* Footer */
+.park-footer {
+    text-align: center;
+    margin-top: 60px;
+    color: #666;
+}
+
+/* ---------------------------------------------------------
+   MOBILE RESPONSIVE
+--------------------------------------------------------- */
+@media (max-width: 768px) {
+    .park-container {
+        padding: 20px 16px;
+    }
+
+    .park-header {
+        padding: 40px 16px;
+    }
+
+    .park-header h1 {
+        font-size: 32px;
+    }
+
+    .park-header p {
+        font-size: 18px;
+    }
+
+    .park-sections {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .park-section {
+        flex: 1 1 100%;
+        min-width: 0;
+        padding: 20px;
+    }
+
+    .about-section,
+    .about-form {
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    .about-form input,
+    .about-form textarea {
+        font-size: 16px;
+    }
+}
