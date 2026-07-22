@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title><?= htmlspecialchars($config['site']['domain']) ?></title>
-<link rel="stylesheet" href="/content/style.css">
-</head>
-<body class="parkbody">
-
 <?php
 $guideItems = $app->content->getDynamicContent($config['site']['content_query_phrases'], $config['site']['domain'], 'wikipedia');
 $trendingItems = $app->content->getDynamicContent($config['site']['content_query_phrases'], $config['site']['domain'], 'tinyfish');
 $resourceTypes = ['openlibrary', 'duckduckgo'];
 $resourceItems = $app->content->getDynamicContent($config['site']['content_query_phrases'], $config['site']['domain'], $resourceTypes[array_rand($resourceTypes)]);
-
 ?>
 
 <div class="park-container">
@@ -29,6 +19,11 @@ $resourceItems = $app->content->getDynamicContent($config['site']['content_query
         <div class="park-section">
             <h2>Overview</h2>
             <?= $app->content->generateSEOBlock($config['site']['topic'], 'overview'); ?>
+            <div class="domain-callout">
+                <span class="domain-callout-label">Domain Inquiry</span>
+                <p>This domain is part of a curated portfolio. It may be available for lease, partnership, or acquisition.</p>
+                <a href="/about">View details &amp; get in touch &rsaquo;</a>
+            </div>
         </div>
 
         <div class="park-section">

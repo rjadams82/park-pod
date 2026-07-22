@@ -5,6 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?= $title ?></title>
         <link rel="stylesheet" href="/content/park/style.css">
+        <?php if (!empty($palette)): ?>
+        <style id="park-palette">:root { <?= implode('; ', json_decode($palette)) ?>; }</style>
+        <?php endif; ?>
 
         <?php
         $gaId = $app->getSetting('ga_id') ?? $config['site']['ga_id'] ?? '';

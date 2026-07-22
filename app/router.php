@@ -173,6 +173,53 @@ if ($isAdminDomain) {
 
 // else parked domain, load up parking data
 
+function parkPalette(string $domain): string {
+    $palettes = [
+        // Teal
+        '[
+            "--pp-bg:#f5f3f0","--pp-card:#ffffff","--pp-card-tint:#f9f8f7","--pp-card-tint-hover:#f0eeeb",
+            "--pp-shadow:0 2px 8px rgba(0,0,0,0.06)","--pp-shadow-hover:0 4px 12px rgba(0,0,0,0.1)",
+            "--pp-border:#e8e4df","--pp-heading:#2c2c2c","--pp-body:#4a4a4a",
+            "--pp-accent:#1a7a6d","--pp-accent-hover:#14635a",
+            "--pp-focus-ring:rgba(26,122,109,0.2)","--pp-back-link:#5a6570","--pp-header-dark:#1a3a35"
+        ]',
+        // Slate Blue
+        '[
+            "--pp-bg:#f3f4f7","--pp-card:#ffffff","--pp-card-tint:#f5f6f9","--pp-card-tint-hover:#eaecf1",
+            "--pp-shadow:0 2px 8px rgba(0,0,0,0.06)","--pp-shadow-hover:0 4px 12px rgba(0,0,0,0.1)",
+            "--pp-border:#dde1e8","--pp-heading:#1e2a3a","--pp-body:#4a5568",
+            "--pp-accent:#3b6fa0","--pp-accent-hover:#2d5a87",
+            "--pp-focus-ring:rgba(59,111,160,0.2)","--pp-back-link:#6b7a8d","--pp-header-dark:#1a2a40"
+        ]',
+        // Warm Amber
+        '[
+            "--pp-bg:#f8f5f0","--pp-card:#ffffff","--pp-card-tint:#faf7f2","--pp-card-tint-hover:#f0ebe2",
+            "--pp-shadow:0 2px 8px rgba(0,0,0,0.06)","--pp-shadow-hover:0 4px 12px rgba(0,0,0,0.1)",
+            "--pp-border:#e8e0d2","--pp-heading:#2c2418","--pp-body:#5a4e3e",
+            "--pp-accent:#b8860b","--pp-accent-hover:#9a7209",
+            "--pp-focus-ring:rgba(184,134,11,0.2)","--pp-back-link:#7a6e5e","--pp-header-dark:#3a2a10"
+        ]',
+        // Forest
+        '[
+            "--pp-bg:#f2f5f0","--pp-card:#ffffff","--pp-card-tint:#f5f8f3","--pp-card-tint-hover:#e8ede5",
+            "--pp-shadow:0 2px 8px rgba(0,0,0,0.06)","--pp-shadow-hover:0 4px 12px rgba(0,0,0,0.1)",
+            "--pp-border:#dde5d8","--pp-heading:#1a2e1a","--pp-body:#4a5e4a",
+            "--pp-accent:#2d7a3a","--pp-accent-hover:#236a2e",
+            "--pp-focus-ring:rgba(45,122,58,0.2)","--pp-back-link:#6a7a6a","--pp-header-dark:#1a2e15"
+        ]',
+        // Plum
+        '[
+            "--pp-bg:#f5f2f5","--pp-card:#ffffff","--pp-card-tint:#f8f5f8","--pp-card-tint-hover:#ede8ed",
+            "--pp-shadow:0 2px 8px rgba(0,0,0,0.06)","--pp-shadow-hover:0 4px 12px rgba(0,0,0,0.1)",
+            "--pp-border:#e2dce5","--pp-heading:#2a1e30","--pp-body:#5a4a60",
+            "--pp-accent:#7a4a8a","--pp-accent-hover:#6a3a7a",
+            "--pp-focus-ring:rgba(122,74,138,0.2)","--pp-back-link:#7a6a80","--pp-header-dark:#2a1535"
+        ]',
+    ];
+    $index = hexdec(substr(md5($domain), 0, 8)) % count($palettes);
+    return $palettes[$index];
+}
+
 $parkedConfig = $app->content->getParkedDomainConfig($host);
 
 if (empty($config['site']['topic'])) {
@@ -207,14 +254,16 @@ if ($showAboutPage) {
     $app->render('park/about', [
         'title'     => $config['site']['domain'] . ' - About',
         'config'    => $config,
-        'submitted' => $submitted
+        'submitted' => $submitted,
+        'palette'   => parkPalette($config['site']['domain']),
     ]);
     exit;
 }
 
 // PARKED DOMAIN HOME PAGE
 $app->render('park/home', [
-    'title'  => $config['site']['domain'],
-    'config' => $config
+    'title'   => $config['site']['domain'],
+    'config'  => $config,
+    'palette' => parkPalette($config['site']['domain']),
 ]);
 exit;

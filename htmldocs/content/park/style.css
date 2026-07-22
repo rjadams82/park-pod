@@ -1,28 +1,47 @@
 /* ---------------------------------------------------------
-   PARKED DOMAIN SITE (all non-admin domains)
---------------------------------------------------------- */
+   PARKED DOMAIN SITE — Palette-Driven
+   Colors set via CSS custom properties on <style id="park-palette">
+   --------------------------------------------------------- */
 
 body.parkbody {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #fafafa;
-    color: #333;
+    background: var(--pp-bg);
+    color: var(--pp-body);
 }
 
-/* Container */
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+a {
+    color: var(--pp-accent);
+}
+
+a:hover {
+    color: var(--pp-accent-hover);
+}
+
+/* ---------------------------------------------------------
+   CONTAINER
+--------------------------------------------------------- */
+
 .park-container {
     max-width: 1400px;
     margin: 0 auto;
     padding: 40px 20px;
 }
 
-/* Header */
+/* ---------------------------------------------------------
+   HOMEPAGE HEADER
+--------------------------------------------------------- */
+
 .park-header {
     text-align: center;
     padding: 60px 20px;
-    background: linear-gradient(135deg, #222, #444);
+    background: linear-gradient(135deg, var(--pp-header-dark), var(--pp-accent));
     color: #fff;
-    border-radius: 10px;
+    border-radius: 12px;
     margin-bottom: 40px;
 }
 
@@ -33,10 +52,31 @@ body.parkbody {
 
 .park-header p {
     font-size: 22px;
-    margin: 0;
+    margin: 0 0 30px;
 }
 
-/* Flex Content Sections */
+.park-cta {
+    display: inline-block;
+    padding: 14px 32px;
+    background: #fff;
+    color: var(--pp-accent);
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background 0.15s, transform 0.15s;
+}
+
+.park-cta:hover {
+    background: rgba(255, 255, 255, 0.88);
+    transform: translateY(-1px);
+    color: var(--pp-accent-hover);
+}
+
+/* ---------------------------------------------------------
+   HOMEPAGE CONTENT SECTIONS
+--------------------------------------------------------- */
+
 .park-sections {
     display: flex;
     flex-wrap: wrap;
@@ -46,25 +86,103 @@ body.parkbody {
 
 .park-section {
     flex: 1 1 calc(50% - 30px);
-    background: #fff;
+    background: var(--pp-card);
     padding: 30px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: var(--pp-shadow);
     min-width: 300px;
 }
 
 .park-section h2 {
     margin-top: 0;
+    color: var(--pp-heading);
 }
 
-/* About Page */
+.dyn-item {
+    margin-bottom: 20px;
+}
+
+.dyn-provider {
+    font-size: 12px;
+    color: #777;
+    margin-top: 6px;
+}
+
+/* About link on homepage */
+.park-about {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.domain-callout {
+    margin-top: 24px;
+    padding: 16px 20px;
+    background: var(--pp-card-tint);
+    border-left: 3px solid var(--pp-accent);
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+}
+
+.domain-callout-label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--pp-accent);
+    margin-bottom: 6px;
+}
+
+.domain-callout p {
+    margin: 0 0 10px;
+    color: var(--pp-body);
+    line-height: 1.5;
+}
+
+.domain-callout a {
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.domain-callout a:hover {
+    text-decoration: underline;
+}
+
+.park-about a {
+    color: var(--pp-back-link);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.park-about a:hover {
+    color: var(--pp-accent);
+}
+
+/* ---------------------------------------------------------
+   ABOUT PAGE
+--------------------------------------------------------- */
+
 .about-section {
     max-width: 900px;
     margin: 40px auto;
     padding: 30px;
-    background: #fff;
-    border-radius: 10px;
-    border: 1px solid #ddd;
+    background: var(--pp-card);
+    border-radius: 12px;
+    box-shadow: var(--pp-shadow);
+}
+
+.about-section h2 {
+    margin-top: 0;
+    color: var(--pp-heading);
+}
+
+.about-section h3 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: var(--pp-heading);
+    padding-left: 14px;
+    border-left: 4px solid var(--pp-accent);
 }
 
 .about-section p {
@@ -72,14 +190,75 @@ body.parkbody {
     margin-bottom: 16px;
 }
 
-/* Contact Form */
+/* Market Grid */
+.market-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.market-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: var(--pp-card-tint);
+    border: 1px solid var(--pp-border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--pp-body);
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+
+.market-card:hover {
+    background: var(--pp-card-tint-hover);
+    border-color: var(--pp-accent);
+    box-shadow: var(--pp-shadow-hover);
+    transform: translateY(-2px);
+}
+
+.market-card img {
+    flex-shrink: 0;
+}
+
+/* Back Link Pill */
+.back-link {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 10px 20px;
+    background: var(--pp-back-link);
+    color: #fff;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.15s;
+}
+
+.back-link:hover {
+    background: var(--pp-accent);
+    color: #fff;
+}
+
+/* ---------------------------------------------------------
+   CONTACT FORM
+--------------------------------------------------------- */
+
 .about-form {
     max-width: 700px;
     margin: 40px auto;
     padding: 30px;
-    background: #fff;
-    border-radius: 10px;
-    border: 1px solid #ddd;
+    background: var(--pp-card);
+    border-radius: 12px;
+    box-shadow: var(--pp-shadow);
+}
+
+.about-form h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: var(--pp-heading);
 }
 
 .about-form input,
@@ -88,18 +267,32 @@ body.parkbody {
     padding: 14px;
     margin: 12px 0;
     border-radius: 6px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--pp-border);
     font-size: 16px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.about-form input:focus,
+.about-form textarea:focus {
+    outline: none;
+    border-color: var(--pp-accent);
+    box-shadow: 0 0 0 3px var(--pp-focus-ring);
 }
 
 .about-form button {
     padding: 14px 24px;
-    background: #333;
+    background: var(--pp-accent);
     color: #fff;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
+    margin-top: 10px;
+    transition: background 0.15s;
+}
+
+.about-form button:hover {
+    background: var(--pp-accent-hover);
 }
 
 .cf-turnstile {
@@ -107,21 +300,14 @@ body.parkbody {
     margin: auto;
 }
 
-.dyn-item {
-    margin-bottom: 20px;
-}
-.dyn-provider {
-    font-size: 12px;
-    color: #777;
-    margin-top: 6px;
-}
+/* ---------------------------------------------------------
+   FOOTER
+--------------------------------------------------------- */
 
-
-/* Footer */
 .park-footer {
     text-align: center;
     margin-top: 60px;
-    color: #666;
+    color: #888;
 }
 
 /* ---------------------------------------------------------
@@ -159,6 +345,10 @@ body.parkbody {
     .about-form {
         margin: 20px auto;
         padding: 20px;
+    }
+
+    .market-grid {
+        grid-template-columns: 1fr 1fr;
     }
 
     .about-form input,
