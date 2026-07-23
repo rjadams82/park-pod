@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS access_logs (
     path TEXT NOT NULL DEFAULT '/',
     referrer TEXT,
     user_ip TEXT,
+    meta TEXT,
     created_at INTEGER NOT NULL
 );
 

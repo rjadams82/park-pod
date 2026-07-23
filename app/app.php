@@ -90,6 +90,11 @@ class App {
             $this->db->exec("ALTER TABLE leads ADD COLUMN archived INTEGER DEFAULT 0");
         }
 
+        $logCols = $this->db->query("PRAGMA table_info(access_logs)")->fetchAll(PDO::FETCH_COLUMN, 1);
+        if (!in_array('meta', $logCols, true)) {
+            $this->db->exec("ALTER TABLE access_logs ADD COLUMN meta TEXT");
+        }
+
     }
 
     /* ---------------------------------------------------------
@@ -187,17 +192,20 @@ class App {
 
         $ip = $_SERVER['REMOTE_ADDR'] ?? null;
 
-        // check for bots before logging
-        $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
-        if (is_bot($ua)) {
-            return; // skip logging
-        }
+        $meta = [
+            'referrer'       => $referrer,
+            'user_agent'     => $_SERVER['HTTP_USER_AGENT'] ?? null,
+            'accept_language'=> $_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? null,
+            'accept_encoding'=> $_SERVER['HTTP_ACCEPT_ENCODING'] ?? null,
+            'x_forwarded_for'=> $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['HTTP_CF_CONNECTING_IP'] ?? null,
+            'query_string'   => $_SERVER['QUERY_STRING'] ?? null,
+        ];
 
         $stmt = $this->db->prepare("
-            INSERT INTO access_logs (host, domain, path, referrer, user_ip, created_at)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO access_logs (host, domain, path, referrer, user_ip, meta, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$host, $domain, $path, $referrer, $ip, time()]);
+        $stmt->execute([$host, $domain, $path, $referrer, $ip, json_encode($meta), time()]);
     }
 
     public function getRecentAccessHosts(int $limit = 20): array

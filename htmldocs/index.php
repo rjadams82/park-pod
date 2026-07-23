@@ -8,9 +8,10 @@ ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/../php-errors.log');
 
 // Load core app
-require __DIR__ . '/../app/app.php';    // core app
-require __DIR__ . '/../app/appdata.php';// app data variables
-require __DIR__ . '/../app/content.php';// content framework
+require __DIR__ . '/../app/app.php';            // core app
+require_once __DIR__ . '/../app/appdata.php';        // app data variables
+require_once __DIR__ . '/../app/content.php';        // content framework
+require_once __DIR__ . '/../app/helpers.php';   // helper functions
 
 $GLOBALS['app_root_path'] = dirname(__DIR__);
 
