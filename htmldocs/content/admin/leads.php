@@ -46,6 +46,7 @@ function leadsSortParams(string $view, int $page): string {
             <tr>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Domain</th>
                 <th>Message</th>
                 <th>Date</th>
                 <th>Actions</th>
@@ -54,6 +55,7 @@ function leadsSortParams(string $view, int $page): string {
             <tr>
                 <td><?= htmlspecialchars($lead['name']) ?></td>
                 <td><?= htmlspecialchars($lead['email']) ?></td>
+                <td><?= htmlspecialchars($lead['domain'] ?? '') ?></td>
                 <td><?= htmlspecialchars($lead['message']) ?></td>
                 <td><?= date('Y-m-d H:i', (int) $lead['created_at']) ?></td>
                 <td style="white-space:nowrap;">

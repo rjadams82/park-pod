@@ -158,7 +158,7 @@ if ($isAdminDomain) {
         $msg   = trim($_POST['contact_message'] ?? '');
 
         if ($email !== '' && $app->verifyRecaptcha()) {
-            $app->saveLead($name, $email, $msg);
+            $app->saveLead($name, $email, $msg, $host);
             $contactSubmitted = true;
         }
     }
@@ -220,6 +220,29 @@ function parkPalette(string $domain): string {
     return $palettes[$index];
 }
 
+function topicVisual(string $topic): array {
+    $map = [
+        'Outdoor Recreation'                => ['svg' => 'mountain',  'glyph' => "\u{26F0}\u{FE0F}",  'pattern' => 'diagonal'],
+        'Travel & Tourism'                  => ['svg' => 'mountain',  'glyph' => "\u{2708}\u{FE0F}",  'pattern' => 'diagonal'],
+        'Real Estate'                       => ['svg' => 'building',  'glyph' => "\u{1F3E0}",          'pattern' => 'grid'],
+        'Family & Community Support'        => ['svg' => 'building',  'glyph' => "\u{1F465}",          'pattern' => 'dots'],
+        'Automotive'                        => ['svg' => 'gear',      'glyph' => "\u{1F697}",          'pattern' => 'diagonal'],
+        'Footwear & Gear'                   => ['svg' => 'gear',      'glyph' => "\u{1F97E}",          'pattern' => 'diagonal'],
+        'Financial Information'             => ['svg' => 'chart',     'glyph' => "\u{1F4C8}",          'pattern' => 'grid'],
+        'Technology'                        => ['svg' => 'code',      'glyph' => "\u{1F4BB}",          'pattern' => 'grid'],
+        'Artificial Intelligence'           => ['svg' => 'code',      'glyph' => "\u{1F916}",          'pattern' => 'grid'],
+        'Website Development'               => ['svg' => 'code',      'glyph' => "\u{1F5A5}\u{FE0F}", 'pattern' => 'grid'],
+        'Health & Wellness'                 => ['svg' => 'heart',     'glyph' => "\u{2764}\u{FE0F}",   'pattern' => 'waves'],
+        'Personal Services'                 => ['svg' => 'heart',     'glyph' => "\u{2B50}",           'pattern' => 'waves'],
+        'Food & Cooking'                    => ['svg' => 'utensils',  'glyph' => "\u{1F373}",          'pattern' => 'dots'],
+        'Audio Production'                  => ['svg' => 'wave',      'glyph' => "\u{1F3B5}",          'pattern' => 'waves'],
+        'Local Information: Lisbon, CT'     => ['svg' => 'pin',       'glyph' => "\u{1F4CD}",          'pattern' => 'dots'],
+        'Local Information: Connecticut'    => ['svg' => 'pin',       'glyph' => "\u{1F4CD}",          'pattern' => 'dots'],
+        'Current Events & Humanitarian Relief' => ['svg' => 'globe', 'glyph' => "\u{1F30D}",          'pattern' => 'diagonal'],
+    ];
+    return $map[$topic] ?? ['svg' => 'chart', 'glyph' => "\u{1F4A1}", 'pattern' => 'dots'];
+}
+
 $parkedConfig = $app->content->getParkedDomainConfig($host);
 
 if (empty($config['site']['topic'])) {
@@ -246,7 +269,7 @@ if ($showAboutPage) {
         $msg   = trim($_POST['message'] ?? '');
 
         if ($email !== '' && $app->verifyRecaptcha()) {
-            $app->saveLead($name, $email, $msg);
+            $app->saveLead($name, $email, $msg, $config['site']['domain']);
             $submitted = true;
         }
     }
@@ -256,6 +279,7 @@ if ($showAboutPage) {
         'config'    => $config,
         'submitted' => $submitted,
         'palette'   => parkPalette($config['site']['domain']),
+        'visual'    => topicVisual($config['site']['topic']),
     ]);
     exit;
 }
@@ -265,5 +289,6 @@ $app->render('park/home', [
     'title'   => $config['site']['domain'],
     'config'  => $config,
     'palette' => parkPalette($config['site']['domain']),
+    'visual'  => topicVisual($config['site']['topic']),
 ]);
 exit;

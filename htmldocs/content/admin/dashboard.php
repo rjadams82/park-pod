@@ -1,5 +1,57 @@
 <div class="admin-container">
 
+    <?php
+    require_once $app->rootPath . '/app/charts.php';
+    $charts = new Charts($app->db);
+
+    $ranges = [
+        '1d'   => '1 Day',
+        '7d'   => '1 Week',
+        '30d'  => '1 Month',
+        '6m'   => '6 Months',
+        '1y'   => '1 Year',
+        'all'  => 'All Time',
+    ];
+    $range = $_GET['chart_range'] ?? '30d';
+    if (!array_key_exists($range, $ranges)) $range = '30d';
+    ?>
+
+    <?php
+    $trafficTrend = $charts->getTrafficTrend($range);
+    $topDomains = $charts->getTopDomains(8, $range);
+    $referrers = $charts->getReferrerSources(6, $range);
+    $rangeLabel = $ranges[$range];
+    if ($trafficTrend || $topDomains || $referrers):
+    ?>
+    <div class="admin-box">
+        <div class="chart-header">
+            <h2>Traffic Overview</h2>
+            <div class="chart-filters">
+                <?php foreach ($ranges as $key => $label): ?>
+                <a href="?admin=dashboard&chart_range=<?= $key ?>" class="chart-filter <?= $key === $range ? 'active' : '' ?>"><?= $label ?></a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="chart-grid">
+            <?php if ($trafficTrend): ?>
+            <div class="chart-cell">
+                <?= $charts->renderLineChart($trafficTrend, 'day', 'hits', $rangeLabel . ' Traffic Trend') ?>
+            </div>
+            <?php endif; ?>
+            <?php if ($topDomains): ?>
+            <div class="chart-cell">
+                <?= $charts->renderBarChart($topDomains, 'domain', 'hits', $rangeLabel . ' Top Domains') ?>
+            </div>
+            <?php endif; ?>
+            <?php if ($referrers): ?>
+            <div class="chart-cell">
+                <?= $charts->renderHorizontalBarChart($referrers, 'source', 'hits', $rangeLabel . ' Referrer Sources') ?>
+            </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php endif; ?>
+
     <div class="admin-box">
         <h2>Recent Access Hosts  <a href="<?= $app->adminUrl('traffic') ?>" style="font-size:0.7em; font-weight:normal;">View All Traffic &raquo;</a></h2>
 
@@ -45,12 +97,14 @@
             <tr>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Domain</th>
                 <th>Date</th>
             </tr>
             <?php foreach ($recentLeads as $lead): ?>
             <tr>
                 <td><?= htmlspecialchars($lead['name']) ?></td>
                 <td><?= htmlspecialchars($lead['email']) ?></td>
+                <td><?= htmlspecialchars($lead['domain'] ?? '') ?></td>
                 <td><?= date('Y-m-d H:i', (int) $lead['created_at']) ?></td>
             </tr>
             <?php endforeach; ?>

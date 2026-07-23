@@ -134,13 +134,13 @@ class App {
     /* ---------------------------------------------------------
        LEADS
     --------------------------------------------------------- */
-    public function saveLead(string $name, string $email, string $message): void
+    public function saveLead(string $name, string $email, string $message, string $domain = ''): void
     {
         $stmt = $this->db->prepare("
-            INSERT INTO leads (name, email, message, created_at)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO leads (name, email, message, domain, created_at)
+            VALUES (?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$name, $email, $message, time()]);
+        $stmt->execute([$name, $email, $message, $domain, time()]);
     }
 
     public function verifyRecaptcha(): bool
@@ -660,7 +660,7 @@ class App {
             header('Content-Disposition: attachment; filename="leads' . ($archived ? '-archived' : '') . '.csv"');
 
             $out = fopen('php://output', 'w');
-            fputcsv($out, ['Name', 'Email', 'Message', 'Date']);
+            fputcsv($out, ['Name', 'Email', 'Domain', 'Message', 'Date']);
 
             $stmt = $this->db->prepare("SELECT * FROM leads WHERE archived = ? ORDER BY created_at DESC");
             $stmt->execute([$archived]);
@@ -669,6 +669,7 @@ class App {
                 fputcsv($out, [
                     $lead['name'],
                     $lead['email'],
+                    $lead['domain'] ?? '',
                     $lead['message'],
                     date('Y-m-d H:i', $lead['created_at'])
                 ]);
