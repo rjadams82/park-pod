@@ -485,6 +485,12 @@ a[target="_blank"]::after {
     color: #aaa;
 }
 
+.ipflag {
+    width: 1.7em;
+    height: auto;
+    vertical-align: middle;
+}
+
 /* Footer */
 .footer {
     text-align: center;

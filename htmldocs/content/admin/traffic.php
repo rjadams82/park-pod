@@ -3,6 +3,8 @@ $page = max(1, (int) ($_GET['p'] ?? 1));
 $perPage = 50;
 $offset = ($page - 1) * $perPage;
 
+require_once $app->rootPath . '/app/helpers.php';
+
 $filterDomain = $_GET['domain'] ?? '';
 $filterHost = $_GET['host'] ?? '';
 $filterDateFrom = $_GET['date_from'] ?? '';
@@ -10,7 +12,7 @@ $filterDateTo = $_GET['date_to'] ?? '';
 $sort = $_GET['sort'] ?? 'created_at';
 $dir = $_GET['dir'] ?? 'DESC';
 
-$allowedSorts = ['created_at', 'host', 'domain', 'path'];
+$allowedSorts = ['created_at', 'host', 'domain', 'path', 'referrer', 'user_ip'];
 $allowedDirs = ['ASC', 'DESC'];
 if (!in_array($sort, $allowedSorts, true)) $sort = 'created_at';
 if (!in_array($dir, $allowedDirs, true)) $dir = 'DESC';
@@ -126,8 +128,8 @@ if ($filterDateTo !== '') $filters['date_to'] = $filterDateTo;
                 <th><?= trafficSortLink('Domain', 'domain', $sort, $dir, $filters) ?></th>
                 <th><?= trafficSortLink('Host', 'host', $sort, $dir, $filters) ?></th>
                 <th><?= trafficSortLink('Path', 'path', $sort, $dir, $filters) ?></th>
-                <th>Referrer</th>
-                <th>IP</th>
+                <th><?= trafficSortLink('Referrer', 'referrer', $sort, $dir, $filters) ?></th>
+                <th><?= trafficSortLink('IP', 'user_ip', $sort, $dir, $filters) ?></th>
             </tr>
             <?php foreach ($entries as $entry): ?>
             <tr>
@@ -141,6 +143,12 @@ if ($filterDateTo !== '') $filters['date_to'] = $filterDateTo;
                     <?php if ($ip !== ''): ?>
                         <a href="https://aruljohn.com/ip/<?= $ip ?>" target="_blank" rel="noopener"><?= $ip ?></a>
                         <a href="https://reverseip.domaintools.com/search/?q=<?= $ip ?>" target="_blank" rel="noopener" style="font-size:0.85em;">lookup</a>
+                        <?php $ipInfo = getIPinfo($entry['user_ip'] ?? ''); ?>
+                        <?php if ($ipInfo && $ipInfo['country'] !== ''): ?>
+                        <div style="font-size:11px; color:#aaa; margin-top:2px;">
+                            <img class="ipflag" src="<?= $ipInfo['flag'] ?>"> <?= htmlspecialchars($ipInfo['country']) ?><?= $ipInfo['company'] !== '' ? ' | ' . htmlspecialchars($ipInfo['company']) : '' ?>
+                        </div>
+                        <?php endif; ?>
                     <?php else: ?>
                         —
                     <?php endif; ?>
