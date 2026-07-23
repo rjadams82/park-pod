@@ -29,6 +29,10 @@ class ProviderBase {
     protected function cacheSet(int $providerId, string $topic, array $data): void {
         if (empty($data)) return;
 
+        $this->db->prepare("
+            DELETE FROM content_cache WHERE provider_id = ? AND topic = ?
+        ")->execute([$providerId, $topic]);
+
         $stmt = $this->db->prepare("
             INSERT INTO content_cache (provider_id, topic, data, fetched_at)
             VALUES (?, ?, ?, ?)
