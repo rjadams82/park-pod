@@ -9,8 +9,8 @@ ini_set('error_log', __DIR__ . '/../php-errors.log');
 
 // Load core app
 require __DIR__ . '/../app/app.php';            // core app
-require_once __DIR__ . '/../app/appdata.php';        // app data variables
-require_once __DIR__ . '/../app/content.php';        // content framework
+require_once __DIR__ . '/../app/appdata.php';   // app data variables
+require_once __DIR__ . '/../app/content.php';   // content framework
 require_once __DIR__ . '/../app/helpers.php';   // helper functions
 
 $GLOBALS['app_root_path'] = dirname(__DIR__);
@@ -31,6 +31,24 @@ $adminPath = $app->adminPath();
 $adminPrefix = $adminPath === '/' ? '/' : $adminPath . '/';
 
 $isAdminDomain = isset($config['site']['admin_domain']) && strtolower($config['site']['admin_domain']) !== '' && strtolower($config['site']['admin_domain']) === $host;
+
+// Early hook: bot + abuse check
+$ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
+$clientIp = $_SERVER['REMOTE_ADDR'] ?? '';
+
+if (is_bot($ua)) {
+    http_response_code(200);
+    echo 'ok';
+    exit;
+}
+
+$abuseData = abuseipdb_lookup($clientIp);
+if ($abuseData && ($abuseData['abuseConfidenceScore'] ?? 0) >= 50) {
+    logger("AbuseIPDB block: {$clientIp} (score: {$abuseData['abuseConfidenceScore']})", 'WARNING');
+    sleep(5);
+    http_response_code(403);
+    exit;
+}
 
 // Log access for non-admin requests
 if (!$isAdminDomain) {

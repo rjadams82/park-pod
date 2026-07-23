@@ -16,15 +16,110 @@ class Charts {
         $where = $days > 0 ? "WHERE created_at >= ?" : "";
         $params = $days > 0 ? [time() - ($days * 86400)] : [];
 
+        if ($days === 0) {
+            $spanRow = $this->db->query("SELECT MIN(created_at) as earliest, MAX(created_at) as latest FROM access_logs")->fetch(PDO::FETCH_ASSOC);
+            if ($spanRow && $spanRow['earliest'] && $spanRow['latest']) {
+                $days = max(1, (int) (($spanRow['latest'] - $spanRow['earliest']) / 86400));
+            }
+        }
+
+        $granularity = $this->getGranularity($days);
+        return $this->getTimeSeriesData($granularity, $where, $params, $days);
+    }
+
+    public static function getGranularity(int $days): string {
+        if ($days <= 1) return 'hour';
+        if ($days <= 30) return 'day';
+        if ($days <= 1000) return 'month';
+        return 'year';
+    }
+
+    public static function getGranularityLabel(string $granularity): string {
+        return match($granularity) {
+            'hour'  => 'Hourly',
+            'day'   => 'Daily',
+            'month' => 'Monthly',
+            'year'  => 'Yearly',
+            default => '',
+        };
+    }
+
+    private function getTimeSeriesData(string $granularity, string $where, array $params, int $days): array {
+        $col = match($granularity) {
+            'hour'  => "strftime('%H:00', created_at, 'unixepoch')",
+            'day'   => "DATE(created_at, 'unixepoch')",
+            'month' => "strftime('%Y-%m', created_at, 'unixepoch')",
+            'year'  => "strftime('%Y', created_at, 'unixepoch')",
+        };
+        $key = $granularity;
+
         $stmt = $this->db->prepare("
-            SELECT DATE(created_at, 'unixepoch') as day, COUNT(*) as hits
+            SELECT {$col} as {$key}, COUNT(*) as hits
             FROM access_logs
             {$where}
-            GROUP BY day
-            ORDER BY day ASC
+            GROUP BY {$key}
+            ORDER BY {$key} ASC
         ");
         $stmt->execute($params);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $map = [];
+        foreach ($rows as $row) {
+            $map[$row[$key]] = (int) $row['hits'];
+        }
+
+        $filled = [];
+        match($granularity) {
+            'hour' => $this->fillHours($map, $filled, $key),
+            'day'  => $this->fillDays($map, $filled, $key, $days),
+            'month'=> $this->fillMonths($map, $filled, $key, $days),
+            'year' => $this->fillYears($map, $filled, $key),
+        };
+        return $filled;
+    }
+
+    private function fillHours(array $map, array &$filled, string $key): void {
+        $now = (int) date('G');
+        for ($i = 0; $i < 24; $i++) {
+            $h = ($now - 23 + $i + 24) % 24;
+            $k = str_pad($h, 2, '0', STR_PAD_LEFT) . ':00';
+            $filled[] = [$key => $k, 'hits' => $map[$k] ?? 0];
+        }
+    }
+
+    private function fillDays(array $map, array &$filled, string $key, int $days): void {
+        $now = new DateTime('now');
+        for ($i = min($days, 365) - 1; $i >= 0; $i--) {
+            $dt = (clone $now)->modify("-{$i} days");
+            $k = $dt->format('Y-m-d');
+            $filled[] = [$key => $k, 'hits' => $map[$k] ?? 0];
+        }
+    }
+
+    private function fillMonths(array $map, array &$filled, string $key, int $days): void {
+        $months = (int) ceil($days / 30);
+        $start = new DateTime('-' . $months . ' months');
+        $end = new DateTime('now');
+        $period = new DatePeriod($start, new DateInterval('P1M'), $end);
+        foreach ($period as $dt) {
+            $k = $dt->format('Y-m');
+            $filled[] = [$key => $k, 'hits' => $map[$k] ?? 0];
+        }
+    }
+
+    private function fillYears(array $map, array &$filled, string $key): void {
+        $min = 9999;
+        $max = 0;
+        foreach ($map as $k => $v) {
+            $y = (int) $k;
+            if ($y < $min) $min = $y;
+            if ($y > $max) $max = $y;
+        }
+        if ($max === 0) $max = (int) date('Y');
+        for ($y = $min; $y <= $max; $y++) {
+            $k = (string) $y;
+            $filled[] = [$key => $k, 'hits' => $map[$k] ?? 0];
+        }
     }
 
     public function getTopDomains(int $limit = 10, string $range = '30d'): array {
@@ -99,19 +194,23 @@ class Charts {
         $points = [];
         $labels = [];
         $count = count($data);
+        $labelEvery = $count <= 12 ? 1 : max(floor($count / 8), 1);
+
         foreach ($data as $i => $row) {
             $x = $padding['left'] + ($chartWidth / max($count - 1, 1)) * $i;
             $y = $padding['top'] + $chartHeight - ($row[$valueKey] / $maxValue * $chartHeight);
             $points[] = "{$x},{$y}";
 
-            if ($count <= 10 || $i % max(floor($count / 8), 1) == 0) {
-                $labels[] = ['x' => $x, 'y' => $height - 10, 'text' => substr($row[$labelKey], 5)];
+            if ($i % $labelEvery == 0) {
+                $raw = $row[$labelKey] ?? '';
+                $text = is_string($raw) && strlen($raw) > 5 ? substr($raw, 5) : $raw;
+                $labels[] = ['x' => $x, 'y' => $height - 10, 'text' => $text];
             }
         }
 
         $polyline = implode(' ', $points);
 
-        $svg = '<svg viewBox="0 0 ' . $width . ' ' . $height . '" class="chart-svg">';
+        $svg = '<svg viewBox="0 0 ' . $width . ' ' . $height . '" width="' . $width . '" height="' . $height . '" class="chart-svg">';
         $svg .= '<text x="' . ($width / 2) . '" y="18" text-anchor="middle" class="chart-title">' . htmlspecialchars($title) . '</text>';
 
         // Grid lines
@@ -136,7 +235,7 @@ class Charts {
 
         // X labels
         foreach ($labels as $l) {
-            $svg .= '<text x="' . $l['x'] . '" y="' . $l['y'] . '" text-anchor="middle" class="chart-label">' . htmlspecialchars($l['text']) . '</text>';
+            $svg .= '<text x="' . $l['x'] . '" y="' . $l['y'] . '" text-anchor="middle" class="chart-label">' . htmlspecialchars((string) $l['text']) . '</text>';
         }
 
         $svg .= '</svg>';
@@ -159,7 +258,7 @@ class Charts {
         $barGap = 8;
         $barWidth = max(($chartWidth - ($barCount - 1) * $barGap) / $barCount, 4);
 
-        $svg = '<svg viewBox="0 0 ' . $width . ' ' . $height . '" class="chart-svg">';
+        $svg = '<svg viewBox="0 0 ' . $width . ' ' . $height . '" width="' . $width . '" height="' . $height . '" class="chart-svg">';
         $svg .= '<text x="' . ($width / 2) . '" y="18" text-anchor="middle" class="chart-title">' . htmlspecialchars($title) . '</text>';
 
         // Grid lines
@@ -203,7 +302,7 @@ class Charts {
         $barGap = 6;
         $barHeight = max(($chartHeight - ($barCount - 1) * $barGap) / $barCount, 4);
 
-        $svg = '<svg viewBox="0 0 ' . $width . ' ' . $height . '" class="chart-svg">';
+        $svg = '<svg viewBox="0 0 ' . $width . ' ' . $height . '" width="' . $width . '" height="' . $height . '" class="chart-svg">';
         $svg .= '<text x="' . ($width / 2) . '" y="18" text-anchor="middle" class="chart-title">' . htmlspecialchars($title) . '</text>';
 
         foreach ($data as $i => $row) {

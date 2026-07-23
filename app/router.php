@@ -11,9 +11,10 @@ $host = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? null;
 // check for admin URI path without admin session, redirect to login
 $adminPrefix = $adminPath === '/' ? '/' : $adminPath . '/';
 if ($isAdminDomain && ($requestPath === $adminPath || str_starts_with($requestPath, $adminPrefix))) {
-    logger("Admin access requested: {$_SERVER['REQUEST_URI']} - session: " . ($app->auth->isAuthenticated() ? $app->auth->get('admin') : 'none'));
+    //logger("Admin access requested: {$_SERVER['REQUEST_URI']} - session: " . ($app->auth->isAuthenticated() ? $app->auth->get('admin') : 'none'));
     $page = $_GET['admin'] ?? null;
 
+    // first run check
     if (!$app->auth->isAuthenticated() && !$app->auth->hasUsers() && $page !== 'login') {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $setupError = $app->auth->handleFirstRun(
@@ -34,7 +35,7 @@ if ($isAdminDomain && ($requestPath === $adminPath || str_starts_with($requestPa
         exit;
     }
 
-    // Not authenticated — redirect to login unless it's the login or logout page post then proceed
+    // Not authenticated - redirect to login unless it's the login or logout page post then proceed
     if (!$app->auth->isAuthenticated() && $page !== 'login' && $page !== 'logout') {
         logger("Admin access denied - redirecting to login");
         $app->render('admin/login', ['title' => 'Admin Login']);
@@ -44,10 +45,10 @@ if ($isAdminDomain && ($requestPath === $adminPath || str_starts_with($requestPa
     // what about non authenticated but page is 'login'
 
 
-    // Authenticated on bare /admin — redirect to appropriate page
+    // Authenticated on bare /admin - redirect to appropriate page
     if (!$page) {
         $defaultPage = $app->auth->getRole() === 'lockout' ? 'users' : 'dashboard';
-        logger("Admin access granted — redirecting to {$defaultPage}");
+        logger("Admin access granted - redirecting to {$defaultPage}");
         header("Location: " . $app->adminUrl($defaultPage));
         exit;
     }

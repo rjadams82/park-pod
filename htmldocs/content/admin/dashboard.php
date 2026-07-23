@@ -21,6 +21,16 @@
     $topDomains = $charts->getTopDomains(8, $range);
     $referrers = $charts->getReferrerSources(6, $range);
     $rangeLabel = $ranges[$range];
+
+    $trendLabelKey = 'day';
+    $chartGranularity = '';
+    if (!empty($trafficTrend[0])) {
+        $gKey = array_key_first(array_filter($trafficTrend[0], fn($k) => $k !== 'hits', ARRAY_FILTER_USE_KEY));
+        if ($gKey) {
+            $trendLabelKey = $gKey;
+            $chartGranularity = Charts::getGranularityLabel($gKey);
+        }
+    }
     if ($trafficTrend || $topDomains || $referrers):
     ?>
     <div class="admin-box">
@@ -35,7 +45,7 @@
         <div class="chart-grid">
             <?php if ($trafficTrend): ?>
             <div class="chart-cell">
-                <?= $charts->renderLineChart($trafficTrend, 'day', 'hits', $rangeLabel . ' Traffic Trend') ?>
+                <?= $charts->renderLineChart($trafficTrend, $trendLabelKey, 'hits', $rangeLabel . ' ' . $chartGranularity . ' Traffic Trend') ?>
             </div>
             <?php endif; ?>
             <?php if ($topDomains): ?>

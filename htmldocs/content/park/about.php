@@ -66,7 +66,7 @@
         <h2>Contact Us</h2>
 
         <?php if (!empty($submitted)): ?>
-            <p><strong>Thank you — your message has been received.</strong></p>
+            <p><strong>Thank you - your message has been received.</strong></p>
         <?php else: ?>
             <form method="POST" id="about-form">
                 <input type="text" name="name" placeholder="Your Name">

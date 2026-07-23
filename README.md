@@ -1,6 +1,6 @@
 # ParkPod
 
-A lightweight, self-hosted domain parking and lead generation platform built with PHP and SQLite. Park domains with dynamic content, capture leads, and manage everything from a clean admin panel — no frameworks, no dependencies, no database server required.
+A lightweight, self-hosted domain parking and lead generation platform built with PHP and SQLite. Park domains with dynamic content, capture leads, and manage everything from a clean admin panel - no frameworks, no dependencies, no database server required.
 
 ![Parked Domain Page](parked.png)
 
@@ -8,13 +8,13 @@ A lightweight, self-hosted domain parking and lead generation platform built wit
 
 ## Key Points
 
-- **Zero dependencies** — pure PHP 8+, SQLite, no Composer, no Node.js
-- **Multi-domain** — serve unique parked pages per domain from a single install
-- **Dynamic content** — auto-populate pages from RSS, Wikipedia, DuckDuckGo, Reddit, OpenLibrary, and TinyFish
-- **Lead generation** — contact forms with Google reCAPTCHA v3 on every parked page
-- **Admin panel** — dashboard, domain management, content providers, leads, traffic logs, settings, backup/restore
-- **Responsive** — mobile-friendly parked pages and service landing page out of the box
-- **SEO-ready** — auto-generated meta titles, descriptions, and Open Graph tags per domain
+- **Zero dependencies** - pure PHP 8+, SQLite, no Composer, no Node.js
+- **Multi-domain** - serve unique parked pages per domain from a single install
+- **Dynamic content** - auto-populate pages from RSS, Wikipedia, DuckDuckGo, Reddit, OpenLibrary, and TinyFish
+- **Lead generation** - contact forms with Google reCAPTCHA v3 on every parked page
+- **Admin panel** - dashboard, domain management, content providers, leads, traffic logs, settings, backup/restore
+- **Responsive** - mobile-friendly parked pages and service landing page out of the box
+- **SEO-ready** - auto-generated meta titles, descriptions, and Open Graph tags per domain
 
 ## Requirements
 
@@ -39,8 +39,8 @@ A lightweight, self-hosted domain parking and lead generation platform built wit
    ```
 
    Edit `_config/config.prod.php` and set:
-   - `admin_domain` — the domain where admin access lives (e.g. `servicedomain.com`)
-   - `admin_path` — URI path for admin (default `/admin`)
+   - `admin_domain` - the domain where admin access lives (e.g. `servicedomain.com`)
+   - `admin_path` - URI path for admin (default `/admin`)
    - Remove any hardcoded `admin` username/password (you'll create your account on first run)
 
 3. **Point your web root** to the `htmldocs/` directory
@@ -52,9 +52,9 @@ A lightweight, self-hosted domain parking and lead generation platform built wit
    chmod -R 755 htmldocs/includes/media/
    ```
 
-5. **Visit your admin domain** — you'll be prompted to create the initial admin account
+5. **Visit your admin domain** - you'll be prompted to create the initial admin account
 
-6. **Add your parked domains** — point their DNS to your server and add them in Admin > Domains
+6. **Add your parked domains** - point their DNS to your server and add them in Admin > Domains
 
 ## Configuration
 
@@ -209,8 +209,8 @@ Each provider supports configurable TTL (cache duration), per-domain topic targe
 
 Each parked domain gets:
 
-- **Home page** — dynamic content sections (guides, trending, resources) populated from providers
-- **About page** — domain info with contact form and reCAPTCHA
+- **Home page** - dynamic content sections (guides, trending, resources) populated from providers
+- **About page** - domain info with contact form and reCAPTCHA
 - Automatic SEO meta tags (title, description, Open Graph)
 - Topic inference from domain name or referrer
 - Responsive mobile layout
@@ -234,12 +234,12 @@ The admin domain serves a professional landing page with:
 
 From Admin > Settings:
 
-- **Backup** — exports providers, settings, and parked domains as SQL (excludes user accounts and logs)
-- **Restore** — imports a backup file, clearing existing data first to avoid conflicts
+- **Backup** - exports providers, settings, and parked domains as SQL (excludes user accounts and logs)
+- **Restore** - imports a backup file, clearing existing data first to avoid conflicts
 
 ## Database
 
-SQLite — no database server needed. Schema is auto-applied on first run and migrations run automatically.
+SQLite - no database server needed. Schema is auto-applied on first run and migrations run automatically.
 
 ### Tables
 

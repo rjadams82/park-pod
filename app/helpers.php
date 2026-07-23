@@ -124,16 +124,38 @@ function countryFlagUrl($cc) {
 }
 
 function is_bot($ua) {
+    global $app_botsignatures;
     if (!$ua) return true; // empty UA = bot
 
     $ua = strtolower($ua);
-    $signatures = include __DIR__ . '/../bot_signatures.php';
 
-    foreach ($signatures as $sig) {
-        if (strpos($ua, $sig) !== false) {
+    foreach ($app_botsignatures as $sig) {
+        if (strpos($ua, strtolower($sig)) !== false) {
             return true;
         }
     }
 
     return false;
+}
+
+function abuseipdb_lookup($ip) {
+    $apiKey = "88d4849d1038b8f2a15489d4d09fed67472ad4aa96fd0430de125cbd15737a4475cb775ec5a6fb1b";
+
+    $url = "https://api.abuseipdb.com/api/v2/check?ipAddress={$ip}&maxAgeInDays=90";
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Key: {$apiKey}",
+        "Accept: application/json"
+    ]);
+
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    if (!$response) return false;
+
+    $data = json_decode($response, true);
+
+    return $data['data'] ?? false;
 }

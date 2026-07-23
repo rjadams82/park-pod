@@ -147,7 +147,7 @@ if ($filterDateTo !== '') $filters['date_to'] = $filterDateTo;
                     <?php if ($referrer !== ''): ?>
                         <a href="<?= htmlspecialchars($referrer) ?>" target="_blank" rel="noopener"><?= htmlspecialchars($referrer) ?></a>
                     <?php else: ?>
-                        —
+                        -
                     <?php endif; ?>
                 </td>
                 <td>
@@ -162,7 +162,7 @@ if ($filterDateTo !== '') $filters['date_to'] = $filterDateTo;
                         </div>
                         <?php endif; ?>
                     <?php else: ?>
-                        —
+                        -
                     <?php endif; ?>
                     <div id="meta-modal" class="modal-overlay" onclick="closeMetaModal(event)">
                         <div class="modal-box">
@@ -182,7 +182,7 @@ if ($filterDateTo !== '') $filters['date_to'] = $filterDateTo;
                     ?>
                         <a href="#" class="meta-link" onclick="openMetaModal(this); return false;" data-meta='<?= htmlspecialchars(json_encode($metaData), ENT_QUOTES) ?>'>View</a>
                     <?php else: ?>
-                        —
+                        -
                     <?php endif; ?>
                 </td>
             </tr>
