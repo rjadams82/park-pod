@@ -8,8 +8,9 @@ ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/../php-errors.log');
 
 // Load core app
-require __DIR__ . '/../app/app.php';
-require __DIR__ . '/../app/content.php';
+require __DIR__ . '/../app/app.php';    // core app
+require __DIR__ . '/../app/appdata.php';// app data variables
+require __DIR__ . '/../app/content.php';// content framework
 
 $GLOBALS['app_root_path'] = dirname(__DIR__);
 

@@ -186,6 +186,13 @@ class App {
         $domain = implode('.', array_slice($parts, -2));
 
         $ip = $_SERVER['REMOTE_ADDR'] ?? null;
+
+        // check for bots before logging
+        $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
+        if (is_bot($ua)) {
+            return; // skip logging
+        }
+
         $stmt = $this->db->prepare("
             INSERT INTO access_logs (host, domain, path, referrer, user_ip, created_at)
             VALUES (?, ?, ?, ?, ?, ?)

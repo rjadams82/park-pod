@@ -122,3 +122,18 @@ function countryFlagUrl($cc) {
     }
     return "https://twemoji.maxcdn.com/v/latest/svg/" . implode('-', $points) . ".svg";
 }
+
+function is_bot($ua) {
+    if (!$ua) return true; // empty UA = bot
+
+    $ua = strtolower($ua);
+    $signatures = include __DIR__ . '/../bot_signatures.php';
+
+    foreach ($signatures as $sig) {
+        if (strpos($ua, $sig) !== false) {
+            return true;
+        }
+    }
+
+    return false;
+}
